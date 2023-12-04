@@ -73,12 +73,14 @@ const App = () => {
       )}
 
       {wallet.accounts.length > 0 && hasProvider && (
-        // <WalletInfo
-        //   accounts={wallet.accounts}
-        //   balance={wallet.balance}
-        //   chainId={wallet.chainId}
-        // />
+      <div>
+        <WalletInfo
+          accounts={wallet.accounts}
+          balance={wallet.balance}
+          chainId={wallet.chainId}
+        />
        <div> Wallet Connected </div>
+       </div>
       )}
         <SendTransactions />
       <ChatGPT />

@@ -1,15 +1,11 @@
 export interface Message {
-    id: number;
+    type: string;
     text: string;
-    responses: string[];
+    position: string;
   }
   
 export let messages: Message[] = [
-    { id: 1, text: 'Hello, World!', responses: ['Hi!', 'Hey there!', 'Hello!'] },
-    { id: 2, text: 'How are you?', responses: ['Good', 'Bad', 'Okay'] },
-    { id: 3, text: 'Testing?', responses: ['Yes', 'No', 'Maybe'] },
+    { type:'text', text: 'Hello, World!', position: 'left'},
+    { type:'text', text: 'How are you?', position: 'right'},
+    { type:'text', text: 'Testing?', position: 'left'},
 ];
-
-export const addMessages = (newMessages: Message[]) => {
-    messages = newMessages;
-};
