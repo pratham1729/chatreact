@@ -4,7 +4,6 @@ import './App.css';
 import ChatApp from './chatbot/chatapp';
 import MetaMaskConnectButton from './metamask/Metamaskwalletbutton';
 import WalletInfo from './metamask/WalletInfo';
-import SendTransactions from './metamask/SendTransactions';
 import { formatBalance, } from './utils';
 import detectEthereumProvider from '@metamask/detect-provider';
 
@@ -82,7 +81,6 @@ const App = () => {
        <div> Wallet Connected </div>
        </div>
       )}
-        <SendTransactions />
       <ChatApp/>
     </div>
   );
