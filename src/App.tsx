@@ -1,7 +1,7 @@
 // App.tsx
 import  { useState, useEffect } from 'react';
 import './App.css';
-import ChatGPT from './chatbot/chat';
+import ChatApp from './chatbot/chatapp';
 import MetaMaskConnectButton from './metamask/Metamaskwalletbutton';
 import WalletInfo from './metamask/WalletInfo';
 import SendTransactions from './metamask/SendTransactions';
@@ -83,7 +83,7 @@ const App = () => {
        </div>
       )}
         <SendTransactions />
-      <ChatGPT />
+      <ChatApp/>
     </div>
   );
 };
