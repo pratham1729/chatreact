@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
-import { Message, messages } from './messageTypes'; // Import from the messageTypes file
+import { Message, messages,addMessages } from './messageTypes'; // Import from the messageTypes file
 import './chat.css';
 
 const ChatApp: React.FC = () => {
   const [newMessage, setNewMessage] = useState<string>('');
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const [previousMessage, setpreviousMessage] = useState<Message | null>(null);
 
   const handleSendMessage = () => {
+    console.log('newMessage', newMessage);
     if (newMessage.trim() !== '') {
-      const message = messages.find((msg) => msg.id === parseInt(newMessage, 10));
-      setSelectedMessage(message || null);
-      setNewMessage('');
+        //get the latest id from the messages array
+        const latestId = messages[messages.length - 1].id;
+        const message: Message = {
+            id:  latestId + 1,
+            text: newMessage,
+            responses: []
+        };
+        // add the new message to the messages array
+        addMessages([...messages, message]);
+        // default the new message to null
+        setNewMessage('');
     }
-    // logic here to handle the message
   };
 
   return (
@@ -20,6 +28,8 @@ const ChatApp: React.FC = () => {
       <div className="ChatApp-messages">
         {messages.map((message) => (
           <div key={message.id} className="ChatApp-message">
+            {message.text}  
+            <br/>
             {message.responses[0]}
           </div>
         ))}
@@ -29,7 +39,7 @@ const ChatApp: React.FC = () => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type message ID and press Enter..."
+          placeholder="Type message and press Enter..."
           className="ChatApp-input"
           onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
         />
@@ -37,12 +47,12 @@ const ChatApp: React.FC = () => {
           Send
         </button>
       </div>
-      {selectedMessage && (
+      {previousMessage && (
         <div className="ChatApp-selected-message">
-          <p>{selectedMessage.text}</p>
+          <p>{previousMessage.text}</p>
           <p>Responses:</p>
           <ul>
-            {selectedMessage.responses.map((response, index) => (
+            {previousMessage.responses.map((response, index) => (
               <li key={index}>{response}</li>
             ))}
           </ul>

@@ -1,14 +1,17 @@
-import './App.css'
-import ChatGPT from './chat'; 
-
-import { useState, useEffect } from 'react'
-import { formatBalance, formatChainAsNum } from './utils'  
-import detectEthereumProvider from '@metamask/detect-provider'
+// App.tsx
+import  { useState, useEffect } from 'react';
+import './App.css';
+import ChatGPT from './chatbot/chat';
+import MetaMaskConnectButton from './metamask/Metamaskwalletbutton';
+import WalletInfo from './metamask/WalletInfo';
+import SendTransactions from './metamask/SendTransactions';
+import { formatBalance, } from './utils';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 const App = () => {
-  const [hasProvider, setHasProvider] = useState<boolean | null>(null)
-  const initialState = { accounts: [], balance: "", chainId: "" }  
-  const [wallet, setWallet] = useState(initialState)
+  const [hasProvider, setHasProvider] = useState<boolean | null>(null);
+  const initialState = { accounts: [], balance: "", chainId: "" };
+  const [wallet, setWallet] = useState(initialState);
 
   useEffect(() => {
     const refreshAccounts = (accounts: any) => {
@@ -59,27 +62,28 @@ const App = () => {
   const handleConnect = async () => {
     let accounts = await window.ethereum.request({
       method: "eth_requestAccounts",
-    })
-    updateWallet(accounts)
-  }
+    });
+    updateWallet(accounts);
+  };
 
   return (
     <div className="App">
-      { window.ethereum?.isMetaMask && wallet.accounts.length < 1 &&
-        <button onClick={handleConnect}>Connect MetaMask</button>
-      }
+      {window.ethereum?.isMetaMask && wallet.accounts.length < 1 && (
+        <MetaMaskConnectButton onConnect={handleConnect} />
+      )}
 
-      { wallet.accounts.length > 0 && hasProvider &&
-        <>                                                              
-          <div>Wallet Accounts: {wallet.accounts[0]}</div>
-          <div>Wallet Balance: {wallet.balance}</div>                  
-          <div>Hex ChainId: {wallet.chainId}</div>                       
-          <div>Numeric ChainId: {formatChainAsNum(wallet.chainId)}</div>
-        </>
-      }
-        <ChatGPT />
+      {wallet.accounts.length > 0 && hasProvider && (
+        // <WalletInfo
+        //   accounts={wallet.accounts}
+        //   balance={wallet.balance}
+        //   chainId={wallet.chainId}
+        // />
+       <div> Wallet Connected </div>
+      )}
+        <SendTransactions />
+      <ChatGPT />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
